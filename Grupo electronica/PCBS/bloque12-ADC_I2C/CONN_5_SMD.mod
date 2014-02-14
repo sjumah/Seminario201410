@@ -1,0 +1,60 @@
+PCBNEW-LibModule-V1  14/02/2014 12:30:55 p.m.
+# encoding utf-8
+Units mm
+$INDEX
+8DIPCMS
+$EndINDEX
+$MODULE 8DIPCMS
+Po 0 0 0 15 52FE52AE 00000000 ~~
+Li 8DIPCMS
+Cd 8dip300 smd shape
+Kw smd cms 8dip
+Sc 0
+AR /52FE4FA4
+Op 0 0 0
+At SMD
+T0 0 3.81 1.016 1.016 0 0.2032 N V 21 N "P1"
+T1 0 2.54 1.016 1.016 0 0.2032 N V 21 N "CONN_5"
+$PAD
+Sh "1" R 1.524 2.032 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 1 "+3.3V"
+Po -5.08 0
+$EndPAD
+$PAD
+Sh "2" R 1.524 2.032 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 5 "GND"
+Po -2.54 0
+$EndPAD
+$PAD
+Sh "3" R 1.524 2.032 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 2 "/SCL"
+Po 0 0
+$EndPAD
+$PAD
+Sh "4" R 1.524 2.032 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 3 "/SDA"
+Po 2.54 0
+$EndPAD
+$PAD
+Sh "5" R 1.524 2.032 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 4 "/V_ANALOG"
+Po 5.08 0
+$EndPAD
+$SHAPE3D
+Na "smd/cms_so8.wrl"
+Sc 1 0.5 0.8
+Of 0 0 0
+Ro 0 0 0
+$EndSHAPE3D
+$EndMODULE 8DIPCMS
+$EndLIBRARY
