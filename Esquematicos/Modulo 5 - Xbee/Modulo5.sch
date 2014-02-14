@@ -1,0 +1,254 @@
+EESchema Schematic File Version 2  date 13/02/2014 07:25:49 p.m.
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:special
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:modules_droids
+EELAYER 43  0
+EELAYER END
+$Descr A4 11700 8267
+encoding utf-8
+Sheet 1 1
+Title ""
+Date "14 feb 2014"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Connection ~ 4300 4450
+Wire Wire Line
+	4300 4650 4300 4450
+Connection ~ 4050 3950
+Wire Wire Line
+	4050 3950 4050 5100
+Wire Wire Line
+	4350 4250 3500 4250
+Wire Wire Line
+	4550 4050 3500 4050
+Wire Wire Line
+	4350 3850 3500 3850
+Wire Wire Line
+	4350 3650 3500 3650
+Wire Wire Line
+	3500 3450 3500 3350
+Wire Wire Line
+	3500 3350 4350 3350
+Wire Wire Line
+	7000 4250 6750 4250
+Wire Wire Line
+	6750 4250 6750 4350
+Wire Wire Line
+	6750 4350 6150 4350
+Wire Wire Line
+	7000 3950 6750 3950
+Wire Wire Line
+	6750 3950 6750 3850
+Wire Wire Line
+	6750 3850 6150 3850
+Wire Wire Line
+	7000 3750 6850 3750
+Wire Wire Line
+	6850 3750 6850 3650
+Wire Wire Line
+	6850 3650 6150 3650
+Wire Wire Line
+	7000 3550 6950 3550
+Wire Wire Line
+	6950 3550 6950 3450
+Wire Wire Line
+	6950 3450 6150 3450
+Wire Wire Line
+	1900 4700 1900 5300
+Connection ~ 1900 6600
+Wire Wire Line
+	1900 6600 2700 6600
+Wire Wire Line
+	2700 6600 2700 6300
+Wire Wire Line
+	2700 5800 2700 5900
+Wire Wire Line
+	1900 5800 1900 5900
+Wire Wire Line
+	1900 6300 1900 6850
+Wire Wire Line
+	6150 3350 7000 3350
+Wire Wire Line
+	7000 3350 7000 3450
+Wire Wire Line
+	6150 3550 6900 3550
+Wire Wire Line
+	6900 3550 6900 3650
+Wire Wire Line
+	6900 3650 7000 3650
+Wire Wire Line
+	6150 3750 6800 3750
+Wire Wire Line
+	6800 3750 6800 3850
+Wire Wire Line
+	6800 3850 7000 3850
+Wire Wire Line
+	6150 3950 6700 3950
+Wire Wire Line
+	6700 3950 6700 4050
+Wire Wire Line
+	6700 4050 7000 4050
+Wire Wire Line
+	6150 4450 6600 4450
+Wire Wire Line
+	6600 4450 6600 4150
+Wire Wire Line
+	6600 4150 7000 4150
+Wire Wire Line
+	6150 4050 6450 4050
+Wire Wire Line
+	6450 4050 6450 4200
+Wire Wire Line
+	6450 4200 6850 4200
+Wire Wire Line
+	6850 4200 6850 4350
+Wire Wire Line
+	6850 4350 7000 4350
+Wire Wire Line
+	4350 3550 3500 3550
+Wire Wire Line
+	6150 4150 6350 4150
+Wire Wire Line
+	6350 4150 6350 3000
+Wire Wire Line
+	6350 3000 3800 3000
+Wire Wire Line
+	3800 3000 3800 3750
+Wire Wire Line
+	3800 3750 3500 3750
+Wire Wire Line
+	4350 3950 3500 3950
+Wire Wire Line
+	4550 4150 3500 4150
+Wire Wire Line
+	4350 4450 3500 4450
+Wire Wire Line
+	3500 4450 3500 4350
+Wire Wire Line
+	4050 5100 2700 5100
+Wire Wire Line
+	2700 5100 2700 5300
+$Comp
+L GND #PWR?
+U 1 1 52FD6269
+P 4300 4650
+F 0 "#PWR?" H 4300 4650 30  0001 C CNN
+F 1 "GND" H 4300 4580 30  0001 C CNN
+	1    4300 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_10 P?
+U 1 1 52FD6131
+P 3150 3900
+F 0 "P?" V 3100 3900 60  0000 C CNN
+F 1 "CONN_10" V 3200 3900 60  0000 C CNN
+	1    3150 3900
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_10 P?
+U 1 1 52FD612B
+P 7350 3900
+F 0 "P?" V 7300 3900 60  0000 C CNN
+F 1 "CONN_10" V 7400 3900 60  0000 C CNN
+	1    7350 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L VCC #PWR?
+U 1 1 52FD60D2
+P 1900 4700
+F 0 "#PWR?" H 1900 4800 30  0001 C CNN
+F 1 "VCC" H 1900 4800 30  0000 C CNN
+	1    1900 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L LED D?
+U 1 1 52FD60A8
+P 2700 6100
+F 0 "D?" H 2700 6200 50  0000 C CNN
+F 1 "LED" H 2700 6000 50  0000 C CNN
+	1    2700 6100
+	0    1    1    0   
+$EndComp
+$Comp
+L LED D?
+U 1 1 52FD60A2
+P 1900 6100
+F 0 "D?" H 1900 6200 50  0000 C CNN
+F 1 "LED" H 1900 6000 50  0000 C CNN
+	1    1900 6100
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 52FD6078
+P 1900 6850
+F 0 "#PWR?" H 1900 6850 30  0001 C CNN
+F 1 "GND" H 1900 6780 30  0001 C CNN
+	1    1900 6850
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R?
+U 1 1 52FD6071
+P 2700 5550
+F 0 "R?" V 2780 5550 50  0000 C CNN
+F 1 "330" V 2700 5550 50  0000 C CNN
+	1    2700 5550
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R?
+U 1 1 52FD6062
+P 1900 5550
+F 0 "R?" V 1980 5550 50  0000 C CNN
+F 1 "1k" V 1900 5550 50  0000 C CNN
+	1    1900 5550
+	1    0    0    -1  
+$EndComp
+$Comp
+L XBEE U?
+U 1 1 52FD6019
+P 5250 4050
+F 0 "U?" H 5000 5150 60  0000 C CNN
+F 1 "XBEE" H 5050 4850 60  0000 C CNN
+	1    5250 4050
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
