@@ -1,4 +1,4 @@
-update=14/02/2014 4:21:00 p. m.
+update=17/02/2014 7:15:29 p. m.
 last_client=eeschema
 [general]
 version=1
@@ -42,3 +42,7 @@ LibName28=atmel
 LibName29=contrib
 LibName30=valves
 LibName31=librerias/bq27510
+LibName32=librerias/mini_usb
+LibName33=librerias/bq24210
+LibName34=librerias/tps63001
+LibName35=librerias/tps63002
