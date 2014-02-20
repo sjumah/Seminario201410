@@ -1,0 +1,222 @@
+PCBNEW-LibModule-V1  19/02/2014 9:48:19 a. m.
+# encoding utf-8
+Units mm
+$INDEX
+SON-10
+SON-12
+$EndINDEX
+$MODULE SON-10
+Po 0 0 0 15 5304C36A 00000000 ~~
+Li SON-10
+Sc 0
+AR 
+Op 0 0 0
+T0 0 3.17 1.5 1.5 0 0.15 N V 21 N "SON-10"
+T1 0 -3.07 1.5 1.5 0 0.15 N V 21 N "VAL**"
+$PAD
+Sh "7" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 1.5 1.5
+$EndPAD
+$PAD
+Sh "6" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 1.5 -1.45
+$EndPAD
+$PAD
+Sh "1" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -1 -1.45
+.SolderMask 0.07
+$EndPAD
+$PAD
+Sh "2" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -0.5 -1.45
+$EndPAD
+$PAD
+Sh "3" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 -1.45
+$EndPAD
+$PAD
+Sh "4" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0.5 -1.45
+$EndPAD
+$PAD
+Sh "5" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 1 -1.45
+$EndPAD
+$PAD
+Sh "9" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0.5 1.5
+$EndPAD
+$PAD
+Sh "8" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 1 1.5
+$EndPAD
+$PAD
+Sh "10" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 1.5
+$EndPAD
+$PAD
+Sh "11" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -0.5 1.5
+$EndPAD
+$PAD
+Sh "12" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -1 1.5
+$EndPAD
+$PAD
+Sh "13" R 3.55 1.7 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 0.025
+$EndPAD
+$SHAPE3D
+Na "3D/SON-10.wrl"
+Sc 0.3937 0.3937 0.3937
+Of 0 0 0
+Ro 0 0 0
+$EndSHAPE3D
+$EndMODULE SON-10
+$MODULE SON-12
+Po 0 0 0 15 5304C3C9 00000000 ~~
+Li SON-12
+Sc 0
+AR 
+Op 0 0 0
+T0 0 3.17 1.5 1.5 0 0.15 N V 21 N "SON-12"
+T1 0 -3.07 1.5 1.5 0 0.15 N V 21 N "VAL**"
+$PAD
+Sh "7" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 1.5 1.5
+$EndPAD
+$PAD
+Sh "6" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 1.5 -1.45
+$EndPAD
+$PAD
+Sh "1" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -1 -1.45
+.SolderMask 0.07
+$EndPAD
+$PAD
+Sh "2" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -0.5 -1.45
+$EndPAD
+$PAD
+Sh "3" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 -1.45
+$EndPAD
+$PAD
+Sh "4" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0.5 -1.45
+$EndPAD
+$PAD
+Sh "5" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 1 -1.45
+$EndPAD
+$PAD
+Sh "9" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0.5 1.5
+$EndPAD
+$PAD
+Sh "8" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 1 1.5
+$EndPAD
+$PAD
+Sh "10" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 1.5
+$EndPAD
+$PAD
+Sh "11" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -0.5 1.5
+$EndPAD
+$PAD
+Sh "12" R 0.28 0.85 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po -1 1.5
+$EndPAD
+$PAD
+Sh "13" R 3.55 1.7 0 0 0
+Dr 0 0 0
+At SMD N 00888000
+Ne 0 ""
+Po 0 0.025
+$EndPAD
+$SHAPE3D
+Na "3D/SON-10.wrl"
+Sc 0.3937 0.3937 0.3937
+Of 0 0 0
+Ro 0 0 0
+$EndSHAPE3D
+$EndMODULE SON-12
+$EndLIBRARY
