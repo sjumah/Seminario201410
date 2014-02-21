@@ -1,0 +1,43 @@
+(export (version D)
+  (design
+    (source C:/Users/Estudiante/Dropbox/Seminario/Desarrollo/LCD/LCD.sch)
+    (date "14/02/2014 01:44:20 p.m.")
+    (tool "eeschema (2013-07-07 BZR 4022)-stable"))
+  (components
+    (comp (ref P1)
+      (value CONN_4)
+      (libsource (lib conn) (part CONN_4))
+      (sheetpath (names /) (tstamps /))
+      (tstamp 52FE5E4A))
+    (comp (ref P2)
+      (value CONN_4)
+      (libsource (lib conn) (part CONN_4))
+      (sheetpath (names /) (tstamps /))
+      (tstamp 52FE6426)))
+  (libparts
+    (libpart (lib conn) (part CONN_4)
+      (description "Symbole general de connecteur")
+      (fields
+        (field (name Reference) P)
+        (field (name Value) CONN_4))
+      (pins
+        (pin (num 1) (name P1) (type passive))
+        (pin (num 2) (name P2) (type passive))
+        (pin (num 3) (name P3) (type passive))
+        (pin (num 4) (name P4) (type passive)))))
+  (libraries
+    (library (logical conn)
+      (uri "C:\\Program Files (x86)\\KiCad\\share\\library\\conn.lib")))
+  (nets
+    (net (code 1) (name /SDA)
+      (node (ref P1) (pin 4))
+      (node (ref P2) (pin 4)))
+    (net (code 2) (name GND)
+      (node (ref P1) (pin 2))
+      (node (ref P2) (pin 2)))
+    (net (code 3) (name +3.3V)
+      (node (ref P1) (pin 1))
+      (node (ref P2) (pin 1)))
+    (net (code 4) (name /SCL)
+      (node (ref P2) (pin 3))
+      (node (ref P1) (pin 3)))))
