@@ -1,0 +1,20 @@
+eeschema (2013-07-07 BZR 4022)-stable  >> Creation date: 22/05/2014 11:06:53 a. m.
+#Cmp ( order = Reference )
+| C1         100n        
+| D1         LED         
+| IC1        ATMEGA8-AI  
+| P1         CONN_5      
+| R1         10K         
+| R2         1K          
+#End Cmp
+
+#Componentes ( orden = Valor )
+| 100n         C1        
+| LED          D1        
+| ATMEGA8-AI   IC1       
+| CONN_5       P1        
+| 1K           R2        
+| 10K          R1        
+#Fin Componentes
+
+#Fin de Lista
