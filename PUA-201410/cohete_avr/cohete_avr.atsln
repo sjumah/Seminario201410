@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "cohete_avr", "cohete_avr\cohete_avr.cproj", "{416F0D84-A6CF-450F-BCD0-98FE72160608}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{416F0D84-A6CF-450F-BCD0-98FE72160608}.Debug|AVR.ActiveCfg = Debug|AVR
+		{416F0D84-A6CF-450F-BCD0-98FE72160608}.Debug|AVR.Build.0 = Debug|AVR
+		{416F0D84-A6CF-450F-BCD0-98FE72160608}.Release|AVR.ActiveCfg = Release|AVR
+		{416F0D84-A6CF-450F-BCD0-98FE72160608}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
