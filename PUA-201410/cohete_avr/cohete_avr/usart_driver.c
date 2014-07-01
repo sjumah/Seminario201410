@@ -325,7 +325,7 @@ void usart_putc0(unsigned char letra)
 }
 void usart_putstr0(char *str) {
 	while(*str) {
-		uart_putc0(*str++);
+		usart_putc0(*str++);
 	}
 }
 

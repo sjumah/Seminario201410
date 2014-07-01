@@ -65,6 +65,7 @@ int MPU6050_read(int start, uint8_t *buffer, int size)
 	{
 		buffer[i]=twiMaster.readData[i];
 	}
+	return 0;
 	
 }
 
@@ -79,7 +80,7 @@ int MPU6050_write_reg(int reg, uint8_t data)
 
 int MPU6050_write(int start, const uint8_t *pData, int size)
 {
-	TWI_MasterWriteRead(&twiMaster,MPU6050_I2C_ADDRESS,&pData,size,0);
+	TWI_MasterWriteRead(&twiMaster,MPU6050_I2C_ADDRESS,pData,size,0);
 
 	return (0);  // return : no error
 	

@@ -5,9 +5,13 @@
  *  Author: CarolXimena
  */ 
 
+#define F_CPU 32000000UL
+#define CPU_SPEED       32000000
+#define BAUDRATE	40000//BAUDRATE I2C
+#define TWI_BAUDSETTING TWI_BAUD(CPU_SPEED, BAUDRATE)
 
 #include <avr/io.h>
-#include <avr/delay.h>
+#include <util/delay.h>
 #include <avr/interrupt.h>
 #include "ADCHandler.c"	//Archivo necesario para manejar el ADC
 #include "PIOHandler.c"	//Archivo necesario para manejar el ADC
@@ -19,11 +23,7 @@
 #include "twi_master_driver.c"
 #include "libMPU/MPU6050.h"
 
-//Falta inicializar y leer I2C, falta iniciar timer con interrupción cada 16ms
-#define F_CPU 32000000UL
-#define CPU_SPEED       32000000
-#define BAUDRATE	40000
-#define TWI_BAUDSETTING TWI_BAUD(CPU_SPEED, BAUDRATE)
+
 #define TEST_BT 5
 #define TEST_RF 2
 #define TRES 3
@@ -51,6 +51,14 @@ uint8_t hayComando;
 //Módulo TWI
 //TWI_Control TWI_Ctrl;
 TWI_Master_t twiMaster;    /*!< TWI master module. */
+
+
+//Declaración de funciones
+void enviarTrama();
+void setup();
+void secuencia_ignicion();
+
+
 
 int main(void)
 {
@@ -85,7 +93,7 @@ int main(void)
 			if(comandoLeido==DIEZ)
 			{
 				//init timer 7' -> interrupt & enable
-				//TODO timer??
+				//TODO timer aquí o antes??
 				usart_putstr1("DIEZCHECK\0");
 				comandoLeido=0;
 			}
@@ -165,22 +173,7 @@ void enviarTrama()
 	
 }
 
-void setup()
-{	
-	setup_clk(); //32mhz
-	setup_ADC();	//Hace el set-up del ADC
-	setup_PIO();	//Hace el set-up de la PIO
-	setup_USART0();	//Hace el set-up de la USART0
-	setup_USART1();	//Hace el set-up de la USART1
-	//TWI_Init(&TWI_Ctrl); //setup_I2C
-	setup_TWI();
-	setupIMU(2,1);
-	
-	setup_Timer();
-	
-	/* Enable global interrupts. */
-	sei();
-}
+
 
 void setup_TWI()
 {
@@ -271,6 +264,29 @@ void setup_USART1(){
 	/* Enable PMIC interrupt level low. */
 	PMIC.CTRL |= PMIC_LOLVLEX_bm;
 }
+void setup_Timer(){
+	//TC_SetPeriod( &TCC0, 0x4E20 );	//Es el periodo o TOP Value para que se active la interrupción. (Equivale a 10ms)
+	TC_SetPeriod( &TCC0, 0xFA00 );	//Es el periodo o TOP Value para que se active la interrupción. (Equivale a 16ms)
+	TC0_ConfigClockSource( &TCC0, TC_CLKSEL_DIV8_gc );	//Se toma el clk sin prescaler - Clk default 2MHz
+	
+}
+
+void setup()
+{
+	setup_clk(); //32mhz
+	setup_ADC();	//Hace el set-up del ADC
+	setup_PIO();	//Hace el set-up de la PIO
+	setup_USART0();	//Hace el set-up de la USART0
+	setup_USART1();	//Hace el set-up de la USART1
+	//TWI_Init(&TWI_Ctrl); //setup_I2C
+	setup_TWI();
+	setupIMU(2,1);
+	
+	setup_Timer();
+	
+	/* Enable global interrupts. */
+	sei();
+}
 
 ISR(USARTC0_RXC_vect)
 {
@@ -322,15 +338,6 @@ ISR(USARTC1_RXC_vect)
 		
 	}
 	sei();
-}
-
-
-void setup_Timer(){
-	//TC_SetPeriod( &TCC0, 0x4E20 );	//Es el periodo o TOP Value para que se active la interrupción. (Equivale a 10ms)
-	TC_SetPeriod( &TCC0, 0xFA00 );	//Es el periodo o TOP Value para que se active la interrupción. (Equivale a 16ms)
-	TC0_ConfigClockSource( &TCC0, TC_CLKSEL_DIV8_gc );	//Se toma el clk sin prescaler - Clk default 2MHz
-	
-	
 }
 
 ISR(TCC0_CCA_vect)
