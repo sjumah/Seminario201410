@@ -1,0 +1,78 @@
+eeschema (2013-07-07 BZR 4022)-stable  >> Creation date: 03/06/2014 4:30:49 p. m.
+#Cmp ( order = Reference )
+| Bth1       CONN_4      
+| C1         22pF        
+| C2         22pF        
+| C3         10uF        
+| C4         22uF        
+| C5         0.33uF      
+| C6         0.1uF       
+| C7         220pF       
+| C8         1u          
+| C9         220pF       
+| D1         LED         
+| D3         LED         
+| D4         LED         
+| IC1        ATXMEGA32A4U-A
+| M1         XBEE-PRO    
+| P1         CONN_2      
+| P2         CONN_6      
+| P3         CONN_6      
+| P4         CONN_4      
+| P5         CONN_8      
+| R1         4.7K        
+| R2         4.7K        
+| R3         2K          
+| R4         1K          
+| R5         1K          
+| R6         1k          
+| R7         1K          
+| R8         1K          
+| R9         1K          
+| R10        1K          
+| R11        1K          
+| R12        1K          
+| U1         LM1117      
+| U2         L78S05      
+| X1         32Mhz       
+#End Cmp
+
+#Componentes ( orden = Valor )
+| CONN_4       Bth1      
+| 22pF         C1        
+| 22pF         C2        
+| 220pF        C7        
+| 220pF        C9        
+| 0.1uF        C6        
+| 0.33uF       C5        
+| 1u           C8        
+| 10uF         C3        
+| 22uF         C4        
+| LED          D1        
+| LED          D3        
+| LED          D4        
+| ATXMEGA32A4U-A IC1       
+| XBEE-PRO     M1        
+| CONN_2       P1        
+| CONN_6       P2        
+| CONN_6       P3        
+| CONN_4       P4        
+| CONN_8       P5        
+| 1K           R4        
+| 1K           R5        
+| 1k           R6        
+| 1K           R7        
+| 1K           R8        
+| 1K           R9        
+| 1K           R10       
+| 1K           R11       
+| 1K           R12       
+| 2K           R3        
+| 4.7K         R1        
+| 4.7K         R2        
+| LM1117       U1        
+| L78S05       U2        
+| 32Mhz        X1        
+#Fin Componentes
+
+#Fin de Lista
