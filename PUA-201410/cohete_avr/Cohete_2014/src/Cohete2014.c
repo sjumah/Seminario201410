@@ -17,6 +17,7 @@
 #define UNO_STRING "UNO\0"
 #define ABORTAR_STRING "ABORTAR\0"
 
+
 #define TEST_BT 5
 #define TEST_RF 2
 #define TEST_RFCHECK 7
@@ -31,13 +32,27 @@
 #define IGN1_ON PORTD_OUT|=0X02
 #define IGN2_ON PORTD_OUT|=0X04
 #define IGN3_ON PORTD_OUT|=0X08
+
+#define IGN0_OFF PORTD_OUT&=~0X01
+#define IGN1_OFF PORTD_OUT&=~0X02
+#define IGN2_OFF PORTD_OUT&=~0X04
+#define IGN3_OFF PORTD_OUT&=~0X08
+
 #define ENABLE_OFF PORTD_OUT&=~0X10
 
+//#define TIEMPO_SEGUNDO_IGNITOR_NEMATODOS 14000
 #define TIEMPO_SEGUNDO_IGNITOR_NEMATODOS 11400
+//#define TIEMPO_SEGUNDO_IGNITOR_NEMATODOS 10000
 
 #define TIEMPO_SEGUNDO_IGNITOR TIEMPO_SEGUNDO_IGNITOR_NEMATODOS//TODO Cambiar dependiendo de la misión a programar!!
 #define TIEMPO_TERCER_IGNITOR 30000//Tiempo en ms
 #define TIEMPO_CUARTO_IGNITOR 30000//Tiempo en ms
+
+
+#define CONTEO_IGNITOR1 11
+#define CONTEO_1MIN 58
+#define CONTEO_APAGADO 20
+
 
 #include "board.h"
 #include "sysclk.h"
@@ -63,18 +78,27 @@ uint8_t sendData1;
 uint8_t receivedData1;
 USART_data_t USART_data1;
 
+volatile int cuenta=0;
 volatile int envioDato=0;
 volatile char* recibido;
 volatile char* recibido2;
 volatile int tamStr=0;
-uint8_t comandoLeido;
-uint8_t hayComando;
+volatile uint8_t comandoLeido;
+volatile uint8_t hayComando;
+
+volatile uint8_t esUnMin=1;
+static uint8_t* accel_t_gyro;
+static uint16_t* p= 0;
 
 
 void testCommunication();
 void setup_Timer();
+void setup_Timer2();
 void enviarTrama();
+void enviarTrama2();
 void secuenciaIgnicion();
+void tomarDatos();
+void enviarTrama2Bth();
 
 void setup_clk()
 {
@@ -164,8 +188,17 @@ static void adc_init(void)
 }
 
 void setup_Timer(){
+	//16 ms
+	TC0_ConfigClockSource( &TCC0, TC_CLKSEL_DIV8_gc );
+	//TC0_ConfigClockSource( &TCC0, TC_CLKSEL_DIV1024_gc );
 	TC_SetPeriod( &TCC0, 0xFA00 );	//Es el periodo o TOP Value para que se active la interrupción. (Equivale a 16ms)
-	TC0_ConfigClockSource( &TCC0, TC_CLKSEL_DIV8_gc );	//Se toma el clk sin prescaler
+	//TC_SetPeriod( &TCC0, 0x7A12 );
+	
+}
+void setup_Timer2(){
+	//1 min
+	TC1_ConfigClockSource( &TCC1, TC_CLKSEL_DIV1024_gc );
+	TC_SetPeriod( &TCC1, 0x8000 );	//Es el periodo o TOP Value para que se active la interrupción. (Equivale a 1030ms)
 }
 
 void setup_test()
@@ -206,8 +239,7 @@ void setup()
 {
 	board_init();
 	setup_clk();
-	setup_PIO();
-	setup_test();	
+	setup_PIO();	
 	adc_init();
 	setup_USART0();	//Hace el set-up de la USART1
 	setup_USART1();	//Hace el set-up de la USART1
@@ -218,14 +250,31 @@ void setup()
 	
 	setupIMU(3,0); //acceleración máxima 16g; velocidad angular máxima de 250°/seg.
 	setup_Timer();
+	setup_Timer2();
+	setup_test();	
 	sei();
 }
-
 void iniciarEnvioDatos()
 {	
+	usart_putstr0("INICIO\0\0");
 	
+	_delay_ms(200);
+	usart_putstr0("INICIO\0\0");
+	//_delay_ms(500);
+	int i=0;
+	for (i=0;i<30000;i++)
+	{
+		nop();
+		nop();
+		nop();
+	}
 	TC_SetCount(&TCC0,0);//establece el contador en cero
 	TC0_SetOverflowIntLevel(&TCC0,TC_OVFINTLVL_MED_gc);//habilita interrupción para enviar datos
+}
+void iniciarConteoUnMin()
+{
+	TC_SetCount(&TCC1,0);//establece el contador en cero
+	TC0_SetOverflowIntLevel(&TCC1,TC_OVFINTLVL_HI_gc);//habilita interrupción para enviar datos
 }
 
 int main(void)
@@ -233,9 +282,16 @@ int main(void)
   setup();
   recibido=malloc(20*sizeof(char));
   recibido2=malloc(20*sizeof(char));
+  accel_t_gyro=malloc(14*sizeof(char));
+  int i=0;
+  for (i=0;i<14;i++)
+  {
+	  accel_t_gyro[i]=i;
+  }
 	//testCommunication();//Descomentar para test del IMU - debe llegar "WHO_AM_I: h"
   while(1){
-	  if(hayComando)
+	  
+	  if(hayComando==1)
 	  {
 		  if (comandoLeido==ABORTAR)
 		  {
@@ -252,14 +308,23 @@ int main(void)
 		  }
 		  if(comandoLeido==TEST_RF)
 		  {
+			  //TODO
+			  testCommunication();
+			  _delay_ms(300);
+			  enviarTrama2Bth();
+			  _delay_ms(300);
 			  usart_putstr0("TESTRF\0");
-			  _delay_ms(300);//Tiempo de espera para recibir confirmación de los dataloggers (la interrupción lo maneja).
+			  //_delay_ms(1000);//Tiempo de espera para recibir confirmación de los dataloggers (la interrupción lo maneja).
+			  int i=0;
+			  for (i=0;i<30000;i++)
+			  {
+				  nop();
+				  nop();
+				  nop();
+			  }
 			  
 			  //Independientemente de cuantos dataloggers respondieron aquí confirmo el comando y empiezo a mandar datos.
 			  usart_putstr1("TESTRFCHECK\0");
-			  usart_putstr0("INICIO\0");
-			  iniciarEnvioDatos();
-			  
 			  comandoLeido=0;
 		  }
 		  if(comandoLeido==DIEZ)
@@ -278,18 +343,32 @@ int main(void)
 			  comandoLeido=0;
 			  //conteo interno
 			  usart_putstr1("UNOCHECK\0");
-			  _delay_ms(60000);//no hay forma de abortar desde aquí.
+			  iniciarConteoUnMin();//1min antes del primer ignitor
+			  _delay_ms(200);
+			  for (int i=0;i<2;i++)
+			  {
+				  usart_putstr0("INICIO\0\0\0\0\0\0");
+				  _delay_ms(500);
+			  }
 			  
-			  secuenciaIgnicion();
+			  //usart_putstr0("INICIO\0\0");
+			  _delay_ms(1000);
+			  //iniciarEnvioDatos();
+			  
+			  while(1)
+			  {
+				  //tomarDatos();
+				  enviarTrama2();
+			  }
+			  
+			  //_delay_ms(60000);//no hay forma de abortar desde aquí.
+			  
+			  //secuenciaIgnicion();
 		  }
 		  hayComando=0;
 		  
-	  }  
-	  if(envioDato==1)
-	  {
-		  enviarTrama();
-		  envioDato=0;
-	  }
+	  } 
+	  
   }
 }
 void secuenciaIgnicion()
@@ -298,25 +377,37 @@ void secuenciaIgnicion()
 	_delay_ms(TIEMPO_SEGUNDO_IGNITOR);
 	IGN1_ON;
 	_delay_ms(TIEMPO_TERCER_IGNITOR);
+	IGN0_OFF;
 	IGN2_ON;
 	_delay_ms(TIEMPO_CUARTO_IGNITOR);
 	IGN3_ON;
+	_delay_ms(10000);
+	IGN1_OFF;
+}
+void tomarDatos()
+{
+	//TODO
+	//adc_start_conversion(&MY_ADC, MY_ADC_CH);
+	//adc_wait_for_interrupt_flag(&MY_ADC, MY_ADC_CH);
+	//*p=adc_get_result(&MY_ADC, MY_ADC_CH);
+	*p++;
+	
+	//int error= MPU6050_read (MPU6050_ACCEL_XOUT_H, (uint8_t *) &accel_t_gyro, 14);
+	int i=0;
+	for (i=0;i<14;i++)
+	{
+		accel_t_gyro[i]++;	
+		if(accel_t_gyro[i]>=100)
+			accel_t_gyro[i]=2;
+	}
 }
 
 void enviarTrama()
 {
-	//sensor presión
-	 adc_start_conversion(&MY_ADC, MY_ADC_CH);
-	 adc_wait_for_interrupt_flag(&MY_ADC, MY_ADC_CH);
-	 uint16_t p= 0;
-	 p=adc_get_result(&MY_ADC, MY_ADC_CH);
-	
-	//uint8_t accel_t_gyro[14]={1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-	uint8_t* accel_t_gyro;
-	int error= MPU6050_read (MPU6050_ACCEL_XOUT_H, (uint8_t *) &accel_t_gyro, 14);
+	//sensor presión 
 	
 	usart_putc0('3');
-	usart_putc0('5');
+	usart_putc0('S');
 	usart_putc0(accel_t_gyro[9]);
 	usart_putc0(accel_t_gyro[8]);
 	usart_putc0(accel_t_gyro[11]);
@@ -333,14 +424,100 @@ void enviarTrama()
 	usart_putc0(accel_t_gyro[4]);
 	
 	usart_putc0(0x7E);
-	usart_putc0(p);
-	usart_putc0(p>>8);
+	usart_putc0(*p);
+	usart_putc0(*p>>8);
+	
+	usart_putc0('S');
+	usart_putc0('Z');
+	usart_putstr0("\0\0\0");
+	
+}
+
+
+void enviarTrama2()
+{
+	//sensor presión
+	adc_start_conversion(&MY_ADC, MY_ADC_CH);
+	adc_wait_for_interrupt_flag(&MY_ADC, MY_ADC_CH);
+	uint16_t presion= 0;
+	presion=adc_get_result(&MY_ADC, MY_ADC_CH);
+	
+	//uint8_t accel_temp_gyro[14]={1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+	
+	uint8_t* accel_temp_gyro=malloc(14*sizeof(char));
+	int error= MPU6050_read (MPU6050_ACCEL_XOUT_H, (uint8_t *) accel_temp_gyro, 14);
+	
+	usart_putc0('3');
+	usart_putc0('S');
+	usart_putc0(accel_temp_gyro[8]);
+	usart_putc0(accel_temp_gyro[9]);
+	usart_putc0(accel_temp_gyro[10]);
+	usart_putc0(accel_temp_gyro[11]);
+	usart_putc0(accel_temp_gyro[12]);
+	usart_putc0(accel_temp_gyro[13]);
+	
+	usart_putc0(0x7E);
+	usart_putc0(accel_temp_gyro[0]);
+	usart_putc0(accel_temp_gyro[1]);
+	usart_putc0(accel_temp_gyro[2]);
+	usart_putc0(accel_temp_gyro[3]);
+	usart_putc0(accel_temp_gyro[4]);
+	usart_putc0(accel_temp_gyro[5]);
+	
+	
+	usart_putc0(0x7E);
+	usart_putc0(presion>>8);
+	usart_putc0(presion);
+	
 	
 	usart_putc0('S');
 	usart_putc0('Z');
 	
 }
 
+
+void enviarTrama2Bth()
+{
+	//sensor presión
+	adc_start_conversion(&MY_ADC, MY_ADC_CH);
+	adc_wait_for_interrupt_flag(&MY_ADC, MY_ADC_CH);
+	uint16_t presion= 0;
+	presion=adc_get_result(&MY_ADC, MY_ADC_CH);
+	
+	//uint8_t accel_temp_gyro[14]={1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+	
+	uint8_t* accel_temp_gyro=malloc(14*sizeof(char));
+	int error= MPU6050_read (MPU6050_ACCEL_XOUT_H, (uint8_t *) accel_temp_gyro, 14);
+	
+	usart_putc1('3');
+	usart_putc1('S');
+	
+	usart_putc1(accel_temp_gyro[8]);
+	usart_putc1(accel_temp_gyro[9]);
+	usart_putc1(accel_temp_gyro[10]);
+	usart_putc1(accel_temp_gyro[11]);
+	usart_putc1(accel_temp_gyro[12]);
+	usart_putc1(accel_temp_gyro[13]);
+	
+	usart_putc1(0x7E);
+
+	usart_putc1(accel_temp_gyro[0]);
+	usart_putc1(accel_temp_gyro[1]);
+	usart_putc1(accel_temp_gyro[2]);
+	usart_putc1(accel_temp_gyro[3]);
+	usart_putc1(accel_temp_gyro[4]);
+	usart_putc1(accel_temp_gyro[5]);
+	
+	
+	usart_putc1(0x7E);
+	usart_putc1(presion>>8);
+	usart_putc1(presion);
+	
+	
+	usart_putc1('S');
+	usart_putc1('Z');
+	
+}
 void testCommunication()
 {
 	uint8_t c;
@@ -428,6 +605,7 @@ ISR(USARTC0_RXC_vect)
 	if (USART_RXBufferData_Available(&USART_data0)) {
 		receivedData0 = USART_RXBuffer_GetByte(&USART_data0);
 		*recibido2++=receivedData0;
+		usart_putc1(receivedData0);
 		tamStr++;
 		if (receivedData0 == 0){			
 			recibido2-=tamStr;
@@ -445,6 +623,39 @@ ISR(TCC0_OVF_vect)
 {	//Sucede cada 16ms
 	cli();
 	TC_SetCount(&TCC0,0);
-	envioDato=1;//habilita envío de la siguiente trama
+	//envioDato=1;//habilita envío de la siguiente trama
+	enviarTrama();
+	sei();
+}
+ISR(TCC1_OVF_vect)
+{	//Sucede cada 2,07 seg
+	cli();
+	encenderLED(0);
+	encenderLED(1);
+	TC_SetCount(&TCC1,0);
+	if(esUnMin==1&&cuenta>=CONTEO_1MIN)//1min ->58
+	{
+		usart_putstr1("Ignitado0\0");
+		IGN0_ON;
+		cuenta=0;
+		esUnMin=0;
+	}
+	
+	else if(esUnMin==0&&cuenta>=CONTEO_IGNITOR1)//11
+	{
+		usart_putstr1("Ignitado1\0");
+		esUnMin=2;
+		IGN1_ON;
+	}
+	else if(esUnMin==2&&cuenta>=CONTEO_APAGADO)//11
+	{
+		usart_putstr1("Apagados\0");
+		IGN1_OFF;
+		IGN0_OFF;
+		esUnMin=3;
+	}
+	cuenta++;
+	//usart_putstr1("CHAO");
+	
 	sei();
 }
